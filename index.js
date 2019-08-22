@@ -58,9 +58,6 @@ requireDirectory(module, './routes', {
   }
 });
 
-app.listen(baseConfig.server.port || 3000, () => {
-  console.log(
-    `server is running at ${baseConfig.server.host ||
-      'http://localhost'}:${baseConfig.server.port || 3000}`
-  );
+app.listen(3002, () => {
+  console.log(`server is running at`);
 });
