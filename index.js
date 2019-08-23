@@ -58,6 +58,6 @@ requireDirectory(module, './routes', {
   }
 });
 
-app.listen(3002, () => {
-  console.log(`server is running at`);
+app.listen(4002, () => {
+  console.log(`server is running at 4002`);
 });
