@@ -2,7 +2,7 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const requireDirectory = require('require-directory');
 const onerror = require('koa-onerror');
-const baseConfig = require('./config/base.config');
+// const baseConfig = require('./config/base.config');
 const cors = require('@koa/cors');
 const koaParser = require('koa-bodyparser');
 require('colors');

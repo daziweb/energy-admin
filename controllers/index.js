@@ -47,7 +47,7 @@ const createData = async ctx => {
     // 参数
     let id = Number(obj.id) + 1;
     // 时间
-    let recordDate = moment().format('YYYY/M/D');
+    let recordDate = moment().format('M/D');
     // 当前能量
     let currentEnergy = Number(energy);
     // 今日营收 = 本次当前能量 - 上次当前能量
