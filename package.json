@@ -23,5 +23,8 @@
     "sequelize": "^5.14.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "utility": "^1.16.1"
+  }
 }
