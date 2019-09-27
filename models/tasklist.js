@@ -18,14 +18,17 @@ TaskList.init(
 		taskname: {
 			type: Sequelize.STRING
 		},
+		status: {
+			type: Sequelize.STRING
+		},
 		content: {
 			type: Sequelize.STRING
 		},
-		createuserid: {
-			type: Sequelize.INTEGER
+		createusercode: {
+			type: Sequelize.STRING
 		},
-		doneuserid: {
-			type: Sequelize.INTEGER
+		doneusercode: {
+			type: Sequelize.STRING
 		},
 		priority: {
 			type: Sequelize.STRING

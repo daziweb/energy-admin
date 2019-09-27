@@ -7,6 +7,7 @@ router.prefix('/task')
 
 router.get('/list', controller.findTaskListAll)
 router.get('/user/login', controller.login)
-router.post('/create', controller.createTask)
+router.get('/user/info', controller.getUserInfo)
+router.post('/createtask', controller.createTask)
 
 module.exports = router
