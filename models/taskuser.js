@@ -21,9 +21,6 @@ TaskUser.init(
 		password: {
 			type: Sequelize.STRING
 		},
-		token: {
-			type: Sequelize.STRING
-		},
 		auth: {
 			type: Sequelize.STRING
 		},

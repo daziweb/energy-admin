@@ -2,10 +2,12 @@
 const TaskUser = require('../models/taskuser')
 const TaskList = require('../models/tasklist')
 const moment = require('moment')
+const redis = require('../utils/redis')
 const utility = require('utility')
 const config = require('../config/base.config')
+const util = require('../utils/index')
 
-// 生成token
+// 获取用户信息
 const getUserInfo = async ctx => {
 	const { username } = ctx.query
 
@@ -16,6 +18,8 @@ const getUserInfo = async ctx => {
 	})
 
 	try {
+		await redis.set(`${config.token}${username}-user`, JSON.stringify(user))
+
 		ctx.body = {
 			success: true,
 			message: '查询成功',
@@ -50,19 +54,13 @@ const login = async ctx => {
 
 	let token = await utility.md5(username + config.token + new Date().getTime())
 
-	let updatetoken = await TaskUser.update(
-		{ token },
-		{
-			where: {
-				username
-			}
-		}
-	)
+	await redis.set(`${config.token}${username}-token`, token)
 
-	if (updatetoken) {
+	if (token) {
 		ctx.body = {
 			success: true,
-			message: '登录成功'
+			message: '登录成功',
+			token
 		}
 	} else {
 		ctx.body = {
@@ -74,9 +72,7 @@ const login = async ctx => {
 
 // 查询所有任务清单
 const findTaskListAll = async ctx => {
-	let list = await TaskList.findAll({
-		order: [['id', 'DESC']]
-	})
+	let list = await TaskList.findAll()
 
 	try {
 		ctx.body = {
@@ -94,7 +90,32 @@ const findTaskListAll = async ctx => {
 
 // 创建任务
 const createTask = async ctx => {
-	const { userid, content } = ctx.request.body
+	const { usercode, taskname, content, priority } = ctx.request.body
+
+	const taskcode = `TASK${moment().format(
+		'YYYYMMDDHHMMSS'
+	)}${util.randomSixBitNumber()}`
+
+	// console.log(taskcode)
+	const newtask = await TaskList.create({
+		taskcode,
+		taskname,
+		content,
+		createusercode: usercode,
+		priority
+	})
+
+	if (newtask) {
+		ctx.body = {
+			success: true,
+			message: '添加成功'
+		}
+	} else {
+		ctx.body = {
+			success: false,
+			message: '添加失败'
+		}
+	}
 }
 
 module.exports = { findTaskListAll, createTask, login, getUserInfo }

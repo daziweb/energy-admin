@@ -7,6 +7,7 @@ module.exports = {
 		author: 'QiuDaGang',
 		email: '1024933801@qq.com'
 	},
+	redisPrefix: 'taskuser:',
 	token: 'task-admin-token',
 	server:
 		env === 'production' ? require('./prod.config') : require('./dev.config')
