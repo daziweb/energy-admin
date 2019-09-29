@@ -9,6 +9,7 @@ TaskList.init(
 	{
 		id: {
 			type: Sequelize.INTEGER,
+			autoIncrement: true,
 			primaryKey: true
 		},
 		taskcode: {
