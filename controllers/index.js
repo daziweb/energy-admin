@@ -15,13 +15,13 @@ const findAll = async ctx => {
     order: [['id', 'DESC']]
   });
 
-  try {
+  if (list && list.length) {
     ctx.body = {
       success: true,
       message: '查询成功',
       data: list
     };
-  } catch {
+  } else {
     ctx.body = {
       success: false,
       message: '查询失败'
