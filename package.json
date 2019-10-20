@@ -20,13 +20,13 @@
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
     "require-directory": "^2.1.1",
-    "sequelize": "^5.14.0",
-    "socket.io": "^2.3.0"
+    "sequelize": "^5.14.0"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ioredis": "^4.14.1",
+    "socket.io": "^2.3.0",
     "utility": "^1.16.1"
   }
 }
