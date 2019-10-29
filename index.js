@@ -5,16 +5,12 @@ const onerror = require('koa-onerror');
 // const baseConfig = require('./config/base.config');
 const cors = require('@koa/cors');
 const koaParser = require('koa-bodyparser');
-const http = require('http');
-const socketio = require('socket.io');
 require('colors');
 require('./db/sequelize.db');
 require('./utils/redis');
-const socketHandle = require('./socket/index');
 const app = new Koa();
-
-const server = http.createServer(app.callback());
-const io = socketio(server);
+const server = require('http').Server(app.callback());
+const io = require('socket.io')(server);
 
 onerror(app);
 
@@ -60,7 +56,7 @@ app.use(
 
 requireDirectory(module, './routes', {
   visit: router => {
-    if (router instanceof Router) {
+    if ( router instanceof Router ) {
       app.use(router.routes(), router.allowedMethods());
     }
   }
@@ -70,16 +66,4 @@ server.listen(4002, () => {
   console.log(`server is running at 4002`);
 });
 
-// socket 事件监听
-io.on('connection', socket => {
-  const socketId = socket.id;
-
-  // 监听用户登录
-  socket.on('login', userId => {
-    // 保存用户的id和socketid
-    console.log(socketId);
-    console.log(`userId------${userId}`);
-    // socketHandle.saveUserSocketId(userId, socketId);
-    // socketHandle.saveUserSocketId(userId, a);
-  });
-});
+io.on('connection', require('./utils/socket'));
