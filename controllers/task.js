@@ -17,7 +17,7 @@ const getUserInfo = async ctx => {
     }
   });
 
-  if (user[0]) {
+  try {
     await redis.set(`${config.token}${username}-user`, JSON.stringify(user));
 
     ctx.body = {
@@ -25,7 +25,7 @@ const getUserInfo = async ctx => {
       message: '查询成功',
       data: user
     };
-  } else {
+  } catch {
     ctx.body = {
       success: false,
       message: '查询失败'
@@ -43,7 +43,7 @@ const login = async ctx => {
     }
   });
 
-  if (!user) {
+  if ( !user ) {
     ctx.body = {
       success: false,
       message: '用户不存在'
@@ -56,7 +56,7 @@ const login = async ctx => {
 
   await redis.set(`${config.token}${username}-token`, token);
 
-  if (token) {
+  if ( token ) {
     ctx.body = {
       success: true,
       message: '登录成功',
@@ -76,13 +76,13 @@ const findTaskListAll = async ctx => {
     order: [['status', 'DESC'], ['priority', 'DESC']]
   });
 
-  if (list && list.length) {
+  try {
     ctx.body = {
       success: true,
       message: '查询成功',
       data: list
     };
-  } else {
+  } catch {
     ctx.body = {
       success: false,
       message: '查询失败'
@@ -108,7 +108,7 @@ const createTask = async ctx => {
     priority
   });
 
-  if (newtask) {
+  if ( newtask ) {
     ctx.body = {
       success: true,
       message: '添加成功'
@@ -121,8 +121,8 @@ const createTask = async ctx => {
   }
 };
 
-const doneTask = async ctx => {
-  const { usercode, taskcode } = ctx.request.body;
+const doneTask = async data => {
+  const { usercode, taskcode } = data;
 
   const task = await TaskList.update(
     {
@@ -134,17 +134,7 @@ const doneTask = async ctx => {
     }
   );
 
-  if (task[0]) {
-    ctx.body = {
-      success: true,
-      message: '操作成功'
-    };
-  } else {
-    ctx.body = {
-      success: false,
-      message: '操作失败'
-    };
-  }
+  return task;
 };
 
 module.exports = { findTaskListAll, createTask, login, getUserInfo, doneTask };
