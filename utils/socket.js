@@ -8,15 +8,19 @@ module.exports = (socket) => {
     // console.log('客户端发送的内容：', data);
     const task = await controller.doneTask(data);
     if ( task ) {
-      socket.broadcast.emit('broadcast', {
+      const successData = {
         success: true,
         message: '操作成功'
-      });
+      };
+      socket.broadcast.emit('noticeupdate', successData);
+      socket.emit('noticeupdate', successData);
     } else {
-      socket.broadcast.emit('broadcast', {
+      const failData = {
         success: false,
         message: '操作错误'
-      });
+      };
+      socket.broadcast.emit('noticeupdate', failData);
+      socket.emit('noticeupdate', failData);
     }
   });
 };
