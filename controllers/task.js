@@ -36,6 +36,7 @@ const getUserInfo = async ctx => {
 // 用户登录
 const login = async ctx => {
   const { username } = ctx.query;
+  console.log(username);
 
   let user = await TaskUser.findOne({
     where: {

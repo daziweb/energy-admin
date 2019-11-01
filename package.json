@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js env=development",
-    "build": "node index.js env=production"
+    "dev": "cross-env NODE_ENV=development PORT=4002 nodemon index.js",
+    "build": "pm2 start sys.config.js --only production --watch"
   },
   "dependencies": {
     "@koa/cors": "^2.2.3",
@@ -25,6 +25,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^6.0.3",
     "ioredis": "^4.14.1",
     "socket.io": "^2.3.0",
     "utility": "^1.16.1"
