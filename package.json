@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development PORT=4002 nodemon index.js",
-    "build": "pm2 start sys.config.js --only production --watch"
+    "build": "pm2 start index.js"
   },
   "dependencies": {
     "@koa/cors": "^2.2.3",
