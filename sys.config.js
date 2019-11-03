@@ -5,7 +5,7 @@ module.exports = {
     env: {
       'NODE_ENV': 'production',
       'PORT': 4002,
-      'NODE_APP_URL': 'http://118.24.29.58'
+      'NODE_APP_URL': 'http://localhost'
     }
   }]
 };
