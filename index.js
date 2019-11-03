@@ -91,7 +91,7 @@ requireDirectory(module, './routes', {
 
 server.listen(baseConfig.port, () => {
   console.log(`server is running at ${baseConfig.port}`);
-  console.log(location)
+  // console.log(server)
 });
 
 io.on('connection', require('./utils/socket'));
