@@ -74,6 +74,9 @@ const login = async ctx => {
 // 查询所有任务清单
 const findTaskListAll = async ctx => {
   let list = await TaskList.findAll({
+    where: {
+      status: ['未完成', '完成']
+    },
     order: [['status', 'DESC'], ['priority', 'DESC']]
   });
 
@@ -122,8 +125,8 @@ const createTask = async ctx => {
   }
 };
 
-const doneTask = async data => {
-  const { usercode, taskcode } = data;
+const doneTask = async ctx => {
+  const { usercode, taskcode } = ctx.request.body;
 
   const task = await TaskList.update(
     {
@@ -135,7 +138,43 @@ const doneTask = async data => {
     }
   );
 
-  return task;
+  if ( task ) {
+    ctx.body = {
+      success: true,
+      message: '添加成功'
+    };
+  } else {
+    ctx.body = {
+      success: false,
+      message: '添加失败'
+    };
+  }
 };
 
-module.exports = { findTaskListAll, createTask, login, getUserInfo, doneTask };
+const delTask = async ctx => {
+  const { usercode, taskcode } = ctx.request.body;
+
+  const task = await TaskList.update(
+    {
+      status: '移除',
+      doneusercode: usercode
+    },
+    {
+      where: { taskcode }
+    }
+  );
+
+  if ( task ) {
+    ctx.body = {
+      success: true,
+      message: '操作成功'
+    };
+  } else {
+    ctx.body = {
+      success: false,
+      message: '操作失败'
+    };
+  }
+};
+
+module.exports = { findTaskListAll, createTask, login, getUserInfo, doneTask, delTask };
