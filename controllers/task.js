@@ -96,7 +96,7 @@ const findTaskListAll = async ctx => {
 
 // 创建任务
 const createTask = async ctx => {
-  const { usercode, taskname, content, priority } = ctx.request.body;
+  const { usercode, taskname, content } = ctx.request.body;
 
   const taskcode = `TASK${moment().format(
     'YYYYMMDDHHMMSS'
@@ -109,7 +109,7 @@ const createTask = async ctx => {
     content,
     status: '未完成',
     createusercode: usercode,
-    priority
+    priority: '重要'
   });
 
   if ( newtask ) {
@@ -141,12 +141,12 @@ const doneTask = async ctx => {
   if ( task ) {
     ctx.body = {
       success: true,
-      message: '添加成功'
+      message: '操作成功'
     };
   } else {
     ctx.body = {
       success: false,
-      message: '添加失败'
+      message: '操作失败'
     };
   }
 };
