@@ -96,7 +96,7 @@ const findTaskListAll = async ctx => {
 
 // 创建任务
 const createTask = async ctx => {
-  const { usercode, taskname, content } = ctx.request.body;
+  const { usercode, content } = ctx.request.body;
 
   const taskcode = `TASK${moment().format(
     'YYYYMMDDHHMMSS'
@@ -105,7 +105,7 @@ const createTask = async ctx => {
   // console.log(taskcode)
   const newtask = await TaskList.create({
     taskcode,
-    taskname,
+    taskname: '任务',
     content,
     status: '未完成',
     createusercode: usercode,
