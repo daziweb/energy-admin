@@ -77,7 +77,7 @@ const findTaskListAll = async ctx => {
     where: {
       status: ['未完成', '完成']
     },
-    order: [['status', 'DESC'], ['priority', 'DESC']]
+    order: [['status', 'DESC'], ['priority', 'DESC'], ['createdAt', 'DESC']]
   });
 
   try {
