@@ -11,28 +11,23 @@ const redis = require('./utils/redis');
 const app = new Koa();
 const server = require('http').Server(app.callback());
 const io = require('socket.io')(server);
+const logUtil = require('./utils/log');
 
 onerror(app);
 
 app.use(async (ctx, next) => {
-  ctx.util = {
-    log: require('./utils/log')
-  };
-
-  await next();
-});
-
-app.use(async (ctx, next) => {
-  let start = new Date().getTime();
-
-  await next();
-
-  let times = new Date().getTime() - start;
-  ctx.util.log.info(
-    `method: ${ctx.method} url: ${ctx.url} time: ${times}ms ${JSON.stringify(
-      ctx.body
-    )}`
-  );
+  let start = new Date();
+  let times;
+  
+  try {
+    await next();
+  
+    times = new Date() - start;
+    logUtil.logResponse(ctx, times);
+  } catch (error) {
+    times = new Date() - start;
+    logUtil.logError(ctx, error, times);
+  }
 });
 
 app.use(koaParser());

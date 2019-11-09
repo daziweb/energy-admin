@@ -7,8 +7,13 @@ const utility = require('utility');
 const config = require('../config/base.config');
 const util = require('../utils/index');
 
+const logsHandle = require('../utils/log').logHandle;
+// const logsInfo = require('../utils/log').logInfo;
+
+
 // 获取用户信息
 const getUserInfo = async ctx => {
+  logsHandle('请求了json接口');
   const { username } = ctx.query;
 
   let user = await TaskUser.findOne({
@@ -35,8 +40,9 @@ const getUserInfo = async ctx => {
 
 // 用户登录
 const login = async ctx => {
+  logsHandle('请求了json接口');
   const { username } = ctx.query;
-  console.log(username);
+  // console.log(username);
 
   let user = await TaskUser.findOne({
     where: {
@@ -73,6 +79,7 @@ const login = async ctx => {
 
 // 查询所有任务清单
 const findTaskListAll = async ctx => {
+  logsHandle('请求了json接口');
   let list = await TaskList.findAll({
     where: {
       status: ['未完成', '完成']
@@ -96,7 +103,8 @@ const findTaskListAll = async ctx => {
 
 // 创建任务
 const createTask = async ctx => {
-  const { usercode, content } = ctx.request.body;
+  logsHandle('请求了json接口');
+  const { usercode, content, number, price } = ctx.request.body;
 
   const taskcode = `TASK${moment().format(
     'YYYYMMDDHHMMSS'
@@ -107,6 +115,8 @@ const createTask = async ctx => {
     taskcode,
     taskname: '任务',
     content,
+    number,
+    price,
     status: '未完成',
     createusercode: usercode,
     priority: '重要'
@@ -126,6 +136,7 @@ const createTask = async ctx => {
 };
 
 const doneTask = async ctx => {
+  logsHandle('请求了json接口');
   const { usercode, taskcode } = ctx.request.body;
 
   const task = await TaskList.update(
@@ -152,6 +163,7 @@ const doneTask = async ctx => {
 };
 
 const delTask = async ctx => {
+  logsHandle('请求了json接口');
   const { usercode, taskcode } = ctx.request.body;
 
   const task = await TaskList.update(
