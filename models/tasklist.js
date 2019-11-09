@@ -25,6 +25,12 @@ TaskList.init(
     content: {
       type: Sequelize.STRING
     },
+    number: {
+      type: Sequelize.FLOAT
+    },
+    price: {
+      type: Sequelize.FLOAT
+    },
     createusercode: {
       type: Sequelize.STRING
     },
