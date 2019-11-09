@@ -41,6 +41,6 @@ TaskList.init(
   }
 );
 
-TaskList.sync();
+TaskList.sync({alter: true});
 
 module.exports = TaskList;
