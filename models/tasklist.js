@@ -31,6 +31,9 @@ TaskList.init(
     price: {
       type: Sequelize.FLOAT
     },
+    numberunit: {
+      type: Sequelize.STRING
+    },
     createusercode: {
       type: Sequelize.STRING
     },
@@ -47,6 +50,6 @@ TaskList.init(
   }
 );
 
-TaskList.sync();
+TaskList.sync({alter: true});
 
 module.exports = TaskList;

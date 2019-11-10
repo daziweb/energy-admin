@@ -104,7 +104,7 @@ const findTaskListAll = async ctx => {
 // 创建任务
 const createTask = async ctx => {
   logsHandle('请求了json接口');
-  const { usercode, content, number, price } = ctx.request.body;
+  const { usercode, content, number, price, numberunit } = ctx.request.body;
 
   const taskcode = `TASK${moment().format(
     'YYYYMMDDHHMMSS'
@@ -117,6 +117,7 @@ const createTask = async ctx => {
     content,
     number,
     price,
+    numberunit,
     status: '未完成',
     createusercode: usercode,
     priority: '重要'
